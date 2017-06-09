@@ -1,0 +1,575 @@
+<!doctype html>
+<html manifest="manifest.json">
+
+<head>
+  <title>Benkio</title>
+  <meta name="viewport" content="width=device-width">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="icon" sizes="192x192" href="https://pbs.twimg.com/profile_images/567296021785374720/6JzKfW_q.png">
+  <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="css/materialize.css" media="screen" title="no title" charset="utf-8">
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+  <link href='https://api.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.css' rel='stylesheet' />
+  <script src="js/vendor/jquery.js"></script>
+  <script src="js/vendor/vue.min.js"></script>
+  <script src="js/vendor/materialize.js"></script>
+  <script src="js/init.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/llenarTabla.js"></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.js'></script>
+</head>
+
+<body>
+  <header>
+    <nav class="top-nav blue darken-3">
+      <a href="#" class="brand-logo white-text center">Arts Collaboratory KM</a>
+      <a href="index.html" class="brand-logo left"></a>
+
+    </nav>
+    <div class="blue darken-3">
+      <br>
+    </div>
+    <div class="nav-content">
+      <ul class="tabs tabs-transparent tabs-fixed-width">
+        <li class="tab blue darken-3"><a href="#usuarios"><i class="icon ion-ios-people larger center"></i></a></li>
+        <li class="tab blue darken-3"><a class="active" href="#intercambios"><i class="icon ion-loop larger center"></i></a></li>
+        <li class="tab blue darken-3"><a href="#herramientas"><i class="icon ion-wrench larger center"></i></a></li>
+        <li class="tab blue darken-3"><a href="#espacios"><i class="icon ion-location larger center"></i></a></li>
+        <li class="tab blue darken-3"><a href="#faq"><i class="icon ion-information-circled larger center"></i></a></li>
+      </ul>
+      <div id="usuarios" class="col s12">
+        <div class='container'>
+          <h2 class="center">Network and Users</h2>
+          <div class="input-field col s12">
+          <input v-model="search" placeholder="Search">
+            </div>
+        
+     <div id="usuarios">
+ <ul>
+    <li v-for="user in users" >
+      <div class="container">
+        <div class="col s12 center">
+          <div class="card lime">
+            <div class="card-content black-text">
+              <span class="card-title">{{ user.Nombre }}</span>
+              <p><b>Contacto:</b> {{ user.Contacto}}</p>
+            </div>
+            <div class="card-action">
+              <p class="asmall"><b>Tipo:</b> {{ user.Tipo }}</p>
+              <p class="asmall"><b>Área de Encuentro:</b> {{ user.Lugar }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+      </div>        
+        
+        <div id="modal1" class="modal">
+      <div class="modal-content container">
+          <h3 class="center">User Registration</h3>
+          <div class="row">
+            <form class="col s12">
+                <div class="input-field col s12">
+                  <input id="name" type="text" class="validate">
+                  <label for="name">Full Name</label>
+                </div>
+                <div class="input-field col s12">
+                  <select>
+      <option value="" disabled selected>Select Option</option>
+      <option value="1">Individual</option>
+      <option value="2">Organization</option>
+    </select>
+                  <label>Type of User</label>
+                </div>
+              
+              <div class="input-field col s12">
+                <input id="residencia" type="text" class="validate">
+                <label for="residencia">Location</label>
+              </div>
+            <div class="input-field col s12">
+              <input id="email" type="email" class="validate">
+              <label for="email">Email</label>
+            </div>
+            <div class="input-field col s12">
+              <input id="contacto" type="text" class="validate">
+              <label for="contacto">Contact (Skype/Facebook)</label>
+            </div>
+            <div class="input-field col s12">
+              <input id="contacto" type="text" class="validate">
+              <label for="contacto">Contact (Phone)</label>
+            </div>
+                    </div>
+          </form>
+        </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Submit</a>
+    </div>
+  </div>
+        
+        
+        
+
+<div class="fixed-action-btn">
+    <a class="btn-floating btn-large red" href="#modal1">(+)
+    </a>
+  </div>
+        <!--<iframe class="center" id="formulario" src="https://docs.google.com/forms/d/e/1FAIpQLScrRsBEZbcPJXKjMBVuah-LuPNkBwzTEJ-CYxKHtpTkwte49A/viewform?embedded=true" marginheight="0" marginwidth="0" width="760" height="500" frameborder="0">Cargando…</iframe>-->
+      </div>
+    </div>
+  <script>
+   
+var apiURL = 'data/intercambios.json';
+
+var app = new Vue({
+
+  el: '#usuarios',
+
+  data: {
+    currentBranch: 'dev',
+    search: '',
+    users: null
+  },
+
+  created: function () {
+    this.fetchData();
+  },
+
+  methods: {
+    fetchData: function () {
+    var self = this;
+    $.get( apiURL, function( data ) {
+        self.users = data;
+        console.log(data);
+    });
+
+    }
+
+  }
+});
+     
+    
+            </script>
+  
+    <div id="intercambios" class="col s12">
+      <div class="container">
+        <h2 class="center">Exchange Board</h2>
+          <div class="input-field col s12">
+          <input v-model="search" placeholder="Search">
+            </div>
+<div id="pizarra">
+ <ul>
+    <li v-for="itcmb in itcmbs">
+      <div class="container">
+        <div class="col s12 center">
+          <div class="card amber">
+            <div class="card-content black-text">
+              <span class="card-title">{{itcmb.Nombre_Actividad}}</span>
+              <p>{{itcmb.Descripción}}.</p>
+            </div>
+            <div class="card-action">
+              <p class="asmall"><b>Category:</b> {{itcmb.Categoría}}</p>
+              <p class="asmall"><b>Facilitator:</b> {{itcmb.Nombre}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+          <div id="modal2" class="modal">
+      <div class="modal-content container">
+          <h3 class="center">Add New Exchange</h3>
+          <div class="row">
+            <form class="col s12">
+                <div class="input-field col s12">
+                  <input id="name_actividad" type="text" class="validate">
+                  <label for="name_actividad">Activity Name</label>
+                </div>
+                <div class="input-field col s12">
+                  <select>
+      <option value="" disabled selected>Choose</option>
+      <option value="1">Project Management</option>
+      <option value="2">I+D</option>
+      <option value="3">Technical</option>
+    </select>
+                  <label>Knowledge Category</label>
+                </div>
+               <div class="input-field col s12">
+                  <select>
+      <option value="" disabled selected>Choose</option>
+      <option value="1">Offer</option>
+      <option value="2">Wish</option>
+    </select>
+                  <label>Type of Exchange</label>
+                </div>
+              
+              <div class="input-field col s12">
+                <input id="descripcion" type="text" class="validate">
+                <label for="descripcion">Description</label>
+              </div>
+            <div class="input-field col s12">
+              <input id="requerimientos" type="text" class="validate">
+              <label for="requerimientos">Requeriments</label>
+            </div>
+            <div class="input-field col s12">
+              <input id="tiempoaprox" type="text" class="validate">
+              <label for="tiempoaprox">Duration-Available Time</label>
+            </div>
+            <div class="input-field col s12">
+              <input id="fechas" type="text" class="validate">
+              <label for="fechas">Suggested Dates</label>
+            </div>
+                    </div>
+          </form>
+        </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close btn-flat">Submit</a>
+    </div>
+  </div>
+           <div class="fixed-action-btn">
+    <a class="btn-floating btn-large red" href="#modal2">+
+    </a>
+  </div>            
+            <script>
+var apiURL = 'data/intercambios.json';
+
+var app = new Vue({
+
+  el: '#pizarra',
+
+  data: {
+    currentBranch: 'dev',
+    itcmbs: null
+  },
+
+  created: function () {
+    this.fetchData();
+  },
+
+  methods: {
+    fetchData: function () {
+    var self = this;
+    $.get( apiURL, function( data ) {
+        self.itcmbs = data;
+        console.log(data);
+    });
+
+    }
+
+  }
+});
+            </script>
+    </div>
+      </div>
+  <div id="herramientas" class="col s12">
+        <div class="container">
+    <h2 class="center">Resources and Tools<h2>
+      <div class="input-field col s12">
+          <input v-model="search" placeholder="Search">
+            </div>
+      <ul class="collapsible" data-collapsible="accordion">
+    <li>
+      <div class="collapsible-header  "><h4>Open Libraries</h4></div>
+      <div class="collapsible-body"><div class="container center">
+        <table id ="tablabiblio" >
+        <thead>
+          <tr>
+              <th><p><b>Name</b></p></th>
+              <th><p><b>Website</b></p></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="biblio in biblios">
+            <td><p><b>{{biblio.Nombre}}</b></p></td>
+            <td><p>{{biblio.Website}}</p></td>
+          </tr>
+          </table>
+        </div></div>
+    </li>
+   <!-- <li>
+      <div class="collapsible-header"><h4>Software abierto</h4></div>
+      <div class="collapsible-body"><p></p></div>
+    </li> 
+    <li>
+      <div class="collapsible-header "><h4>Related Initiatives</h4></div>
+      <div class="collapsible-body orange"><div class="container center">
+                <table id ="tablainit" >
+        <thead>
+          <tr>
+              <th><p><b>Name</b></p></th>
+            <th><p><b>Description</b></p></th>
+              <th><p><b>Website</b></p></th>
+            
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="initlocal in initlocales">
+            <td><p><b>{{initlocal.Nombre}}</b></p></td>
+            <td><p>{{initlocal.Actividad}}</p></td>
+            <td><p><a href='{{initlocal.Website}}'>{{initlocal.Website}}</a></p></td>
+          </tr>
+          </table>
+      </div></div>
+    </li> -->
+    <li>
+      <div class="collapsible-header "><h4>Related Initiatives</h4></div>
+      <div class="collapsible-body"><div class="container center">
+                <table id ="tablatranslocal" >
+        <thead>
+          <tr>
+              <th><p><b>Nombre</b></p></th>
+            <th><p><b>Description</b></p></th>
+              <th><p><b>Website</b></p></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="translocal in translocales">
+            <td><p><b>{{translocal.Nombre}}</b></p></td>
+            <td><p>{{translocal.Actividad}}</p></td>
+            <td><p><a href='{{translocal.Website}}'>{{translocal.Website}}</a></p></td>
+          </tr>
+          </table>
+      </div></div>
+    </li>
+  </ul>
+  </div>
+     <div id="modal3" class="modal">
+      <div class="modal-content container">
+          <h3 class="center">Resource Registration</h3>
+          <div class="row">
+            <form class="col s12">
+                <div class="input-field col s12">
+                  <input id="name_actividad" type="text" class="validate">
+                  <label for="name_actividad"> Tool Name</label>
+                </div>
+                <div class="input-field col s12">
+                  <select>
+      <option value="" disabled selected>Choose</option>
+      <option value="1">Library</option>
+      <option value="2">Iniciative</option>
+      <option value="3">Software</option>
+    </select>
+                  <label>Resource-Tool Category</label>
+                </div>
+              
+              <div class="input-field col s12">
+                <input id="descripcion" type="text" class="validate">
+                <label for="descripcion">Description</label>
+              </div>
+            <div class="input-field col s12">
+              <input id="website" type="text" class="validate">
+              <label for="website">Website</label>
+            </div>
+                    </div>
+          </form>
+        </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close btn-flat">Submit</a>
+    </div>
+  </div>
+           <div class="fixed-action-btn">
+    <a class="btn-floating btn-large red" href="#modal3">+
+    </a>
+  </div>       
+  </div>
+          <script>
+var apiURL = 'data/biblios.json';
+
+var app = new Vue({
+
+  el: '#tablabiblio',
+
+  data: {
+    currentBranch: 'dev',
+    biblios: null
+  },
+
+  created: function () {
+    this.fetchData();
+  },
+
+  methods: {
+    fetchData: function () {
+    var self = this;
+    $.get( apiURL, function( data ) {
+        self.biblios = data;
+        console.log(data);
+    });
+
+    }
+
+  }
+});
+            </script>
+          <script>
+var apiURL = 'data/iniciativas locales.json';
+
+var app = new Vue({
+
+  el: '#tablainit',
+
+  data: {
+    currentBranch: 'dev',
+    initlocales: null
+  },
+
+  created: function () {
+    this.fetchData();
+  },
+
+  methods: {
+    fetchData: function () {
+    var self = this;
+    $.get( apiURL, function( data ) {
+        self.initlocales = data;
+        console.log(data);
+    });
+
+    }
+
+  }
+});
+            </script>
+          <script>
+var apiURL = 'data/iniciativas translocales.json';
+
+var app = new Vue({
+
+  el: '#tablatranslocal',
+
+  data: {
+    currentBranch: 'dev',
+    translocales: null
+  },
+
+  created: function () {
+    this.fetchData();
+  },
+
+  methods: {
+    fetchData: function () {
+    var self = this;
+    $.get( apiURL, function( data ) {
+        self.translocales = data;
+        console.log(data);
+    });
+
+    }
+
+  }
+});
+            </script>
+          
+  <div id="espacios" class="col s12">
+        <div class="container">
+    <h2 class="center">Meeting Spaces<h2>
+      <br>
+      <div class="input-field col s12">
+          <input v-model="search" placeholder="Search">
+            </div>
+      <div class="switch">
+    <label>
+      Mapa
+      <input type="checkbox">
+      <span class="lever"></span>
+      Lista
+    </label>
+  </div>
+      <div class="container">
+        <div id='map' style='width: 640px; height: 480px;'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiYmVua2lvIiwiYSI6ImNqMnl0bmEzeTAxMXEycW1ucXBsa3lwZ3UifQ.k_GQGrynS5H16hKOBLNKVw';
+var map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/benkio/cj2yu17k9000e2so850kk6z0j'
+});
+</script>
+        <!--<iframe src="https://www.google.com/maps/d/u/0/embed?mid=1QZVBJcTDnffQGLOfej3GqR27bc4" width="640" height="480"></iframe>-->
+      </div>
+    </div>
+<div id="modal4" class="modal">
+      <div class="modal-content container">
+          <h3 class="center">Meeting Space Registration</h3>
+          <div class="row">
+            <form class="col s12">
+                <div class="input-field col s12">
+                  <input id="name_actividad" type="text" class="validate">
+                  <label for="name_actividad">Space Name</label>
+                </div>
+                <div class="input-field col s12">
+                  <select>
+      <option value="" disabled selected>Choose</option>
+      <option value="1">Library</option>
+      <option value="2">House</option>
+      <option value="3">Green Area</option>
+    </select>
+                  <label>Space Category</label>
+                </div>
+              
+              <div class="input-field col s12">
+                <input id="descripcion" type="text" class="validate">
+                <label for="descripcion">Description</label>
+              </div>
+            <div class="input-field col s12">
+              <input id="locacion" type="text" class="validate">
+              <label for="locacion">Location</label>
+            </div>
+                    </div>
+          </form>
+        </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close btn-flat">Submit</a>
+    </div>
+  </div>
+           <div class="fixed-action-btn">
+    <a class="btn-floating btn-large red" href="#modal4">+
+    </a>
+  </div>       
+  </div>
+    </div>
+  <div id="faq" class="col s12">
+        <div class="container">
+    <h2 class="center">FAQ<h2>
+      <ul class="collapsible" data-collapsible="accordion">
+    <li>
+      <div class="collapsible-header"><h4>What's Arts Collaboratory?</h4></div>
+      <div class="collapsible-body"><p></li>
+    <li>
+      <div class="collapsible-header"><h4>How does it Work?</h4></div>
+      <div class="collapsible-body"><p></li>
+    
+    <li>
+      <div class="collapsible-header"><h4>Why?</h4></div>
+      <div class="collapsible-body"></div>
+    </li>
+  </ul>
+      </div>
+    </div>
+    </div>
+  </nav>
+     </header>
+
+
+      </body>
+   <footer>
+   </footer>
+</html>
+<!--
+<div class="container">
+  <a href="" class="waves-effect waves-light card-panel blue white-text col s6"><i class="icon ion-ios-people right"></i>USUARIOS</a>
+  <a href="" class="waves-effect waves-light card-panel blue white-text col s6"><i class="icon ion-loop right"></i>INTERCAMBIOS</a>
+ </div>
+ <div class="container">
+   <a href="" class="waves-effect waves-light card-panel blue white-text col s6"><i class="icon ion-wrench right"></i>HERRAMIENTAS</a>
+   <a href="" class="waves-effect waves-light card-panel blue white-text col s6"><i class="icon ion-location right"></i>ESPACIOS</a>
+ </div>
+ <div class="container">
+   <div href="" class="waves-effect waves-light card-panel blue white-text col s12"><i class="icon ion-information-circled right"></i>FAQ</div>
+ </div>
+-->
